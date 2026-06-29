@@ -8,3 +8,10 @@ body {
   right: 600px;
   width: 600px;
 }
+.desenho {
+  position: absolute;
+  top: 0px;
+  right: -10px;
+  width: 400px;
+  height: 300px;
+}
