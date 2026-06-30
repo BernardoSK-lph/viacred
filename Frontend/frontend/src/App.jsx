@@ -6,17 +6,19 @@ import { useState } from 'react';
 import './index.css';
 
 export default function App() {
+
   const [etapa, setEtapa] = useState(0);
 
   const [escalaSelecionada, setEscalaSelecionada] = useState(null);
+
   const [estrelaSelecionada, setEstrelaSelecionada] = useState({
     ambiente: 0,
     atendimento: 0,
     espera: 0
   });
   const [cpf, setCpf] = useState(null);
-  const [mensagem, setMensagem] = useState(null);
 
+  const [mensagem, setMensagem] = useState(null);
 
   return (
     <div className="pagina-geral">
@@ -98,7 +100,7 @@ export default function App() {
 
     </div>
 
-    <button id="enviarEtapa2" disabled={estrelaSelecionada.ambiente === 0 || estrelaSelecionada.atendimento === 0 || estrelaSelecionada.tempo === 0} onClick={() => setEtapa(2)}>Enviar</button>
+    <button id="enviarEtapa2" disabled={estrelaSelecionada.ambiente === 0 || estrelaSelecionada.atendimento === 0 || estrelaSelecionada.espera === 0} onClick={() => setEtapa(2)}>Enviar</button>
   </div>
 )}
 
@@ -115,25 +117,32 @@ export default function App() {
       )}
 
       {etapa === 3 && (
-        <div>
-
+        <div className="janelaEtapa4">
+          <img src={logo} className="logo" alt="Logo" />
+          <div classname="ccaracteres1Etapa4">
+            <button className="botaoCpf"></button>
+          </div>
+          <div classname="ccaracteres2Etapa4">
+          </div>
+          <div classname="ccaracteres3Etapa4">
+          </div>
         </div>
       )}
 
       {etapa === 4 && (
-        <div className="janelaEtapa4">
+        <div className="janelaEtapa5">
           <img src={logo} className="logo" alt="Logo" />
-          <p className="textoEtapa4">Deixe seu comentário</p>
-          <textarea className="caixaDeTextoEtapa4" placeholder="Digite sua mensagem aqui... (máx. 600 caracteres)" maxLength={600} onChange={(e) => setMensagem(e.target.value)}></textarea>
-          <button className="enviarEtapa4" onClick={() => setEtapa(5)}>Enviar comentário</button>
+          <p className="textoEtapa5">Deixe seu comentário</p>
+          <textarea className="caixaDeTextoEtapa5" placeholder="Digite sua mensagem aqui... (máx. 600 caracteres)" maxLength={600} onChange={(e) => setMensagem(e.target.value)}></textarea>
+          <button className="enviarEtapa5" onClick={() => setEtapa(5)}>Enviar comentário</button>
         </div>
       )}
 
       {etapa === 5 && (
-        <div className="janeçaEtapa5">
+        <div className="janeçaEtapa6">
           <img src={logo} className="logo" alt="Logo" />
-          <p className="texto1Etapa5">Obrigado!</p>
-          <p className="texto2Etapa5">Seus dados foram salvos com <span className="sucessoLaranja">sucesso!</span></p>
+          <p className="texto1Etapa6">Obrigado!</p>
+          <p className="texto2Etapa6">Seus dados foram salvos com <span className="sucessoLaranja">sucesso!</span></p>
         </div>
       )}
 

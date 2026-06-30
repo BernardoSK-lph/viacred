@@ -207,7 +207,9 @@ body {
 }
 
 /* --- Etapa 4 --- */
-.janelaEtapa4 {
+
+/* --- Etapa 5 --- */
+.janelaEtapa5 {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -215,13 +217,13 @@ body {
   width: 100%;
 }
 
-.textoEtapa4 {
+.textoEtapa5 {
   font-size: 95px;
   text-align: center;
   margin-top: 130px;
   font-family: sans-serif;
 }
-.caixaDeTextoEtapa4 {
+.caixaDeTextoEtapa5 {
   width: 130%;
   height: 400px;
   
@@ -239,7 +241,7 @@ body {
   
 }
 
-.enviarEtapa4 {
+.enviarEtapa5 {
   margin-top: 10px;
   padding: 15px 40px;
   font-size: 24px;
@@ -252,12 +254,12 @@ body {
   transition: background-color 0.2s;
   
 }
-.enviarEtapa4:hover {
+.enviarEtapa5:hover {
   background-color: #4caf50;
 }
 
-/* --- Etapa 5 / Final --- */
-.texto1Etapa5 {
+/* --- Etapa 6 / Final --- */
+.texto1Etapa6 {
   color: gray;
   font-size: 150px;
   text-align: center;
@@ -266,7 +268,7 @@ body {
   font-weight: bold;
 }
 
-.texto2Etapa5 {
+.texto2Etapa6 {
   font-size: 50px;
   text-align: center;
   font-family: sans-serif;
