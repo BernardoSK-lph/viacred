@@ -1,10 +1,162 @@
 body {
   background-image: url(assets/bg.png);
   background-size: 60%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 98vh;
+  margin: 0;
+  overflow: hidden;
 }
+
 .logo {
   position: absolute;
-  top: 10px;
+  top: 40px;
   right: 600px;
   width: 600px;
+}
+
+.desenho {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 400px;
+  height: 300px;
+}
+
+/* --- Etapa 1 --- */
+.janelaEtapa1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1900px;
+}
+
+.textoEtapa1 {
+  font-size: 85px;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.escalaEtapa1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 30px;
+  flex-wrap: wrap;
+}
+
+.botao-escala {
+  color: white;
+  border: 1px solid transparent;
+  font-size: 100px;
+  width: 140px;             
+  height: 140px;            
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.1s cubic-bezier(0.100, 0.800, 0.300, 1.000);
+}
+
+.botao-escala.destaque {
+  transform: scale(1.2);
+}
+
+#enviarEtapa1 {
+  margin-top: 20px;       
+  padding: 15px 40px;
+  font-size: 30px;       
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+  background-color: #007acc;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+#enviarEtapa1:disabled {
+  background-color: #555555;
+  color: #999999;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+
+/* --- ETAPA 2 --- */
+
+.janelaEtapa2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.textoEtapa2 {
+  font-size: 60px;       
+  text-align: center;     
+  width: 100%;
+
+  margin: 0 0 30px 0;
+}
+
+.estrelas1Etapa2, 
+.estrelas2Etapa2, 
+.estrelas3Etapa2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 35px;
+  margin-bottom: 10px;
+}
+
+.botao-estrela {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.botao-estrela .estrela {
+  width: 135px;  
+  height: 135px; 
+  transition: transform 0.1s ease;
+}
+
+.botao-estrela:hover .estrela {
+  transform: scale(1.1);
+}
+
+
+#enviarEtapa2 {
+  display: block;
+  margin: 20px auto 0 auto;
+
+  padding: 15px 50px;
+  font-size: 50px;       
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+  background-color: #007acc;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+#enviarEtapa2:hover {
+  background-color: #0062a3;
+}
+
+/* --- ETAPA 3 --- */
+.textoEtapa3 {
+  font-size: 80px;
+  text-align: center;
+  transform: translateY(-90px);
 }
