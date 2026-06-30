@@ -14,6 +14,8 @@ export default function App() {
     atendimento: 0,
     espera: 0
   });
+  const [cpf, setCpf] = useState(null);
+  const [mensagem, setMensagem] = useState(null);
 
 
   return (
@@ -102,11 +104,40 @@ export default function App() {
 
       {etapa === 2 && (
         <div className="janelaEtapa3">
+          <img src={logo} className="logo" alt="Logo" />
             <p className="textoEtapa3">Gostaria de imformar o seu CPF?</p>
-            <button onClick={() => setEtapa(3)}>Enviar</button>
+            <div className="botoesEtapa3">
+            <button className="botaoSimEtapa3" onClick={() => setEtapa(3)}>Sim</button>
+            <button className="botaoNaoEtapa3" onClick={() => setEtapa(4)}>Não</button>
+            </div>
+
+        </div>
+      )}
+
+      {etapa === 3 && (
+        <div>
+
+        </div>
+      )}
+
+      {etapa === 4 && (
+        <div className="janelaEtapa4">
+          <img src={logo} className="logo" alt="Logo" />
+          <p className="textoEtapa4">Deixe seu comentário</p>
+          <textarea className="caixaDeTextoEtapa4" placeholder="Digite sua mensagem aqui... (máx. 600 caracteres)" maxLength={600} onChange={(e) => setMensagem(e.target.value)}></textarea>
+          <button className="enviarEtapa4" onClick={() => setEtapa(5)}>Enviar comentário</button>
+        </div>
+      )}
+
+      {etapa === 5 && (
+        <div className="janeçaEtapa5">
+          <img src={logo} className="logo" alt="Logo" />
+          <p className="texto1Etapa5">Obrigado!</p>
+          <p className="texto2Etapa5">Seus dados foram salvos com <span className="sucessoLaranja">sucesso!</span></p>
         </div>
       )}
 
     </div>
   );
+
 }

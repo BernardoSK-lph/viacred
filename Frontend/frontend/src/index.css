@@ -36,9 +36,10 @@ body {
 }
 
 .textoEtapa1 {
-  font-size: 85px;
+  font-size: 80px;
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 15px;
+  font-family: sans-serif;
 }
 
 .escalaEtapa1 {
@@ -79,8 +80,8 @@ body {
 }
 
 #enviarEtapa1:disabled {
-  background-color: #555555;
-  color: #999999;
+  background-color: #f9a825;
+  color: #ffffff;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
@@ -102,8 +103,8 @@ body {
   font-size: 60px;       
   text-align: center;     
   width: 100%;
-
   margin: 0 0 30px 0;
+  font-family: sans-serif;
 }
 
 .estrelas1Etapa2, 
@@ -155,8 +156,8 @@ body {
 }
 
 #enviarEtapa2:disabled {
-  background-color: #555555;
-  color: #999999;
+  background-color: #f9a825;
+  color: #ffffff;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
@@ -164,7 +165,114 @@ body {
 
 /* --- ETAPA 3 --- */
 .textoEtapa3 {
-  font-size: 80px;
+  font-size: 95px;
   text-align: center;
-  transform: translateY(-90px);
+  font-family: sans-serif;
+}
+
+.botoesEtapa3 {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+}
+
+.botaoSimEtapa3 {
+  padding: 15px 50px;
+  background-color: #66bb6a;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 110px;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+}
+
+.botaoNaoEtapa3 {
+  padding: 15px 50px;
+  background-color: #f9a825;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 110px;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+}
+.botaoSimEtapa3:hover {
+  transition: transform 0.1s ease;
+  transform: scale(1.1);
+}
+.botaoNaoEtapa3:hover {
+  transition: transform 0.1s ease;
+  transform: scale(1.1);
+}
+
+/* --- Etapa 4 --- */
+.janelaEtapa4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  width: 100%;
+}
+
+.textoEtapa4 {
+  font-size: 95px;
+  text-align: center;
+  margin-top: 130px;
+  font-family: sans-serif;
+}
+.caixaDeTextoEtapa4 {
+  width: 130%;
+  height: 400px;
+  
+  margin-top: -80px;
+  margin-bottom: 25px;
+  
+  padding: 15px;
+  text-align: left;
+  font-size: 30px;
+  
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: none;
+  font-family: sans-serif;
+  
+}
+
+.enviarEtapa4 {
+  margin-top: 10px;
+  padding: 15px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+  background-color: #66bb6a;
+  color: white;
+  transition: background-color 0.2s;
+  
+}
+.enviarEtapa4:hover {
+  background-color: #4caf50;
+}
+
+/* --- Etapa 5 / Final --- */
+.texto1Etapa5 {
+  color: gray;
+  font-size: 150px;
+  text-align: center;
+  margin-bottom: -55px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.texto2Etapa5 {
+  font-size: 50px;
+  text-align: center;
+  font-family: sans-serif;
+  margin-top: 100px;
+}
+
+.sucessoLaranja {
+  color: orange;
 }
