@@ -89,7 +89,7 @@ export default function App() {
   };
 
   const resetarTimerPorToque = () => {
-  if (etapa > 0 && etapa < 5) {
+  if (etapa > 0) {
     if (timerInatividade.current) clearTimeout(timerInatividade.current);
     timerInatividade.current = setTimeout(() => {
       setEtapa(0);
