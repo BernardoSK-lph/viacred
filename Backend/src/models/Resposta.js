@@ -3,10 +3,10 @@ const sequelize = require('../database/index');
 
 const Resposta = sequelize.define('Resposta', {
 
-    nps: {
+    nei: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validade: {
+        validate: {
             min: 0,
             max: 10
         }
@@ -30,7 +30,7 @@ const Resposta = sequelize.define('Resposta', {
     avaliacao_espera: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validade: {
+        validate: {
             min: 1,
             max: 5
         }
