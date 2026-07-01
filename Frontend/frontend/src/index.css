@@ -69,15 +69,17 @@ body {
 #enviarEtapa1 {
   margin-top: 20px;       
   padding: 15px 40px;
-  font-size: 30px;       
+  font-size: 50px;       
   font-weight: bold;
   cursor: pointer;
   border-radius: 100px;
   border: none;
   background-color: #007acc;
   color: white;
-  transition: background-color 0.2s;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  transform: scale(1);
 }
+
 
 /* --- ETAPA 2 --- */
 .janelaEtapa2 {
@@ -136,7 +138,8 @@ body {
   border: none;
   background-color: #007acc;
   color: white;
-  transition: background-color 0.2s;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  transform: scale(1);
 }
 
 #enviarEtapa2:hover,
@@ -144,15 +147,18 @@ body {
   background-color: #0062a3;
 }
 
-/* Estado desabilitado compartilhado (Etapas 1, 2 e 4) */
+/* Mantivemos o :disabled nativo para casos em que você queira usar no futuro, 
+  e adicionamos a classe .botao-bloqueado compartilhando do mesmo estilo visual!
+*/
 #enviarEtapa1:disabled,
 #enviarEtapa2:disabled,
-.enviarEtapa4:disabled {
-  background-color: #f9a825;
-  color: #ffffff;
+.enviarEtapa4:disabled,
+.botao-bloqueado {
+  background-color: rgb(80, 80, 80) !important;
+  color: #ffffff !important;
   cursor: not-allowed;
   box-shadow: none;
-  transform: none;
+  transform: scale(0.9) !important;
 }
 
 /* --- ETAPA 3 --- */
@@ -181,7 +187,7 @@ body {
 }
 
 .botaoSimEtapa3 { background-color: #66bb6a; }
-.botaoNaoEtapa3 { background-color: #f9a825; }
+.botaoNaoEtapa3 { background-color: gray; }
 
 .botaoSimEtapa3:hover,
 .botaoNaoEtapa3:hover {
@@ -301,7 +307,7 @@ body {
 
 /* --- Etapa 6 / Final --- */
 .texto1Etapa6 {
-  color: gray;
+  color: rgb(80, 80, 80);
   font-size: 150px;
   text-align: center;
   margin-bottom: -55px;
@@ -318,4 +324,34 @@ body {
 
 .sucessoLaranja {
   color: orange;
+}
+
+/* --- Retângulo de Aviso Flutuante (Toast) --- */
+.alerta-inferior {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e73c22;
+  color: white;
+  padding: 25px 60px;
+  border-radius: 50px;
+  font-size: 32px;
+  font-family: sans-serif;
+  font-weight: bold;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: subirAviso 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Animação para fazer o pop-up vir de baixo com efeito elástico */
+@keyframes subirAviso {
+  from {
+    bottom: -120px;
+    opacity: 0;
+  }
+  to {
+    bottom: 40px;
+    opacity: 1;
+  }
 }

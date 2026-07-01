@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./index.css";
 import logo from "./assets/logo.png";
 import desenho from "./assets/desenho.png";
 import estrelaVazia from "./assets/starlight.png";
 import estrelaPreenchida from "./assets/estrela_active.png";
 import { salvarPesquisa } from "./services/api";
+let cronometroAviso = null;
 
 export default function App() {
-  // --- Estados (States) ---
+  // --- Estados (States) --- //
   const [etapa, setEtapa] = useState(0);
   const [escalaSelecionada, setEscalaSelecionada] = useState(null);
   const [mensagem, setMensagem] = useState(null);
@@ -18,8 +19,49 @@ export default function App() {
     atendimento: 0,
     espera: 0,
   });
+  
+  const [mostrarAviso, setMostrarAviso] = useState(false);
+  const timerInatividade = useRef(null);
 
-  // --- Funções de Lógica ---
+  useEffect(() => {
+    if (etapa === 0) {
+      if (timerInatividade.current) clearTimeout(timerInatividade.current);
+      return;
+    }
+
+    if (timerInatividade.current) {
+      clearTimeout(timerInatividade.current);
+    }
+
+    timerInatividade.current = setTimeout(() => {
+      setEscalaSelecionada(null);
+      setEstrelaSelecionada({ ambiente: 0, atendimento: 0, espera: 0 });
+      setCpf([null, null, null, null, null, null, null, null, null, null, null]);
+      setContador(1);
+      setMensagem(null);
+      setMostrarAviso(false);
+
+      setEtapa(0); 
+    }, 30000);
+    
+    return () => {
+      if (timerInatividade.current) clearTimeout(timerInatividade.current);
+    };
+  }, [etapa]);
+
+  // --- Funções de Lógica --- //
+
+  const dispararAviso = () => {
+    if (cronometroAviso) {
+      clearTimeout(cronometroAviso);
+    }
+    setMostrarAviso(true);
+
+    cronometroAviso = setTimeout(() => {
+      setMostrarAviso(false);
+    }, 10000);
+  };
+
   const adicionarNumero = (numeroDigitado) => {
     if (contador > 11) {
       return;
@@ -46,6 +88,23 @@ export default function App() {
     setContador(proximoContador);
   };
 
+  const resetarTimerPorToque = () => {
+  if (etapa > 0 && etapa < 5) {
+    if (timerInatividade.current) clearTimeout(timerInatividade.current);
+    timerInatividade.current = setTimeout(() => {
+      setEtapa(0);
+      setEscalaSelecionada(null);
+      setEstrelaSelecionada({ ambiente: 0, atendimento: 0, espera: 0 });
+      setCpf([null, null, null, null, null, null, null, null, null, null, null]);
+      setContador(1);
+      setMensagem(null);
+      setMostrarAviso(false);
+
+      setEtapa(0); 
+    }, 30000);
+  }
+};
+
   const finalizarPesquisa = async () => {
     const cpfString = cpf[0] !== null ? cpf.join("") : null;
 
@@ -67,9 +126,15 @@ export default function App() {
     }
   };
 
+  // --- Validações de Etapas --- //
+  const etapa0Invalida = escalaSelecionada === null;
+  const etapa1Invalida = estrelaSelecionada.ambiente === 0 || estrelaSelecionada.atendimento === 0 || estrelaSelecionada.espera === 0;
+  const etapa3Invalida = contador < 12;
+
   // --- Renderização (JSX) ---
   return (
-    <div className="pagina-geral">
+    <div className="pagina-geral" onClick={resetarTimerPorToque}>
+
       <img src={desenho} className="desenho" alt="Desenho" />
 
       {/* ETAPA 0 - Escala NPS */}
@@ -94,7 +159,7 @@ export default function App() {
             <button style={{ backgroundColor: "#316e2e" }} className={escalaSelecionada === 10 ? "botao-escala destaque" : "botao-escala"} onClick={() => setEscalaSelecionada(10)}>10</button>
           </div>
           
-          <button id="enviarEtapa1" disabled={escalaSelecionada === null} onClick={() => setEtapa(1)}>Enviar</button>
+          <button id="enviarEtapa1" className={etapa0Invalida ? "botao-bloqueado" : ""} onClick={() => {if (etapa0Invalida) {dispararAviso();} else {setMostrarAviso(false);setEtapa(1);}}}>Enviar</button>
         </div>
       )}
 
@@ -139,13 +204,7 @@ export default function App() {
             </div>
           </div>
 
-          <button 
-            id="enviarEtapa2" 
-            disabled={estrelaSelecionada.ambiente === 0 || estrelaSelecionada.atendimento === 0 || estrelaSelecionada.espera === 0} 
-            onClick={() => setEtapa(2)}
-          >
-            Enviar
-          </button>
+          <button id="enviarEtapa2" className={etapa1Invalida ? "botao-bloqueado" : ""} onClick={() => {if (etapa1Invalida) {dispararAviso();} else {setMostrarAviso(false); setEtapa(2);}}}>Enviar</button>
         </div>
       )}
 
@@ -206,7 +265,7 @@ export default function App() {
             </div>
           </div>
           
-          <button className="enviarEtapa4" disabled={contador < 12} onClick={() => setEtapa(4)}>Enviar</button>
+          <button className={`enviarEtapa4 ${etapa3Invalida ? "botao-bloqueado" : ""}`} onClick={() => {if (etapa3Invalida) {dispararAviso();} else {setMostrarAviso(false); setEtapa(4);}}}>Enviar</button>
         </div>
       )}
 
@@ -231,6 +290,13 @@ export default function App() {
           <img src={logo} className="logo" alt="Logo" />
           <p className="texto1Etapa6">Obrigado!</p>
           <p className="texto2Etapa6">Seus dados foram salvos com <span className="sucessoLaranja">sucesso!</span></p>
+        </div>
+      )}
+
+      {/* Retângulo de Aviso Flutuante (Renderiza na parte inferior quando true) */}
+      {mostrarAviso && (
+        <div className="alerta-inferior">
+          Falta preencher alguma avaliação obrigatória!
         </div>
       )}
     </div>
