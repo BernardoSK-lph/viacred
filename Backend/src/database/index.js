@@ -1,16 +1,15 @@
-const { Sequelize } = require("sequelize");
-require("dotenv").config();
+const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: "postgres",
-    logging: false, // remove logs SQL no terminal
-  }
-);
+const sequelize = new Sequelize('viacred_db', 'postgres', '123456789', {
+  host: 'localhost',
+  dialect: 'postgres',
+  logging: false
+});
+
+const Resposta = require('../models/Resposta');
+
+sequelize.sync({ alter: true })
+  .then(() => console.log('Tabela de respostas sincronizada com sucesso!'))
+  .catch(err => console.error('Erro ao sincronizar tabelas:', err));
 
 module.exports = sequelize;

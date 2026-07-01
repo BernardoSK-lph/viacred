@@ -4,6 +4,7 @@ import estrelaVazia from "./assets/starlight.png"
 import estrelaPreenchida from "./assets/estrela_active.png"
 import { useState } from 'react';
 import './index.css';
+import { salvarPesquisa } from './services/api';
 
 export default function App() {
 
@@ -16,9 +17,62 @@ export default function App() {
     atendimento: 0,
     espera: 0
   });
-  const [cpf, setCpf] = useState(null);
 
   const [mensagem, setMensagem] = useState(null);
+
+  const [contador, setContador] = useState(1);
+  const [cpf, setCpf] = useState([null, null, null, null, null, null, null, null, null, null, null]);
+
+  const adicionarNumero = (numeroDigitado) => {
+  if (contador > 11) {
+    return; 
+  }
+
+  const novoCpf = [...cpf];
+  novoCpf[contador - 1] = numeroDigitado;
+  setCpf(novoCpf);
+
+  let proximoContador = contador + 1;
+  
+  setContador(proximoContador);
+};
+
+  const apagarNumero = () => {
+    let proximoContador = contador - 1;
+    if (proximoContador === 0) {
+      proximoContador = 1;
+    }
+
+    const novoCpf = [...cpf];
+    novoCpf[proximoContador - 1] = null;
+
+    setCpf(novoCpf);
+    setContador(proximoContador);
+  };
+
+  const finalizarPesquisa = async () => {
+
+  const cpfString = cpf[0] !== null ? cpf.join('') : null;
+
+  const dadosParaEnviar = {
+    nps: escalaSelecionada,
+    avaliacao_ambiente: estrelaSelecionada.ambiente,
+    avaliacao_atendimento: estrelaSelecionada.atendimento,
+    avaliacao_espera: estrelaSelecionada.espera,
+    cpf: cpfString,
+    comentario: mensagem
+  };
+
+  try {
+
+    await salvarPesquisa(dadosParaEnviar);
+    
+    setEtapa(5);
+  } catch (error) {
+    console.error("Erro ao salvar os dados:", error);
+    alert("Não foi possível salvar sua avaliação. Por favor, tente novamente.");
+  }
+};
 
   return (
     <div className="pagina-geral">
@@ -107,7 +161,7 @@ export default function App() {
       {etapa === 2 && (
         <div className="janelaEtapa3">
           <img src={logo} className="logo" alt="Logo" />
-            <p className="textoEtapa3">Gostaria de imformar o seu CPF?</p>
+            <p className="textoEtapa3">Gostaria de informar o seu CPF?</p>
             <div className="botoesEtapa3">
             <button className="botaoSimEtapa3" onClick={() => setEtapa(3)}>Sim</button>
             <button className="botaoNaoEtapa3" onClick={() => setEtapa(4)}>Não</button>
@@ -117,24 +171,60 @@ export default function App() {
       )}
 
       {etapa === 3 && (
-        <div className="janelaEtapa4">
-          <img src={logo} className="logo" alt="Logo" />
-          <div classname="ccaracteres1Etapa4">
-            <button className="botaoCpf"></button>
-          </div>
-          <div classname="ccaracteres2Etapa4">
-          </div>
-          <div classname="ccaracteres3Etapa4">
-          </div>
-        </div>
-      )}
+  <div className="janelaEtapa4">
+    <img src={logo} className="logo" alt="Logo" />
 
+    <div className="calculadora-simples">
+      
+      <div className="visor-simples">
+        {cpf.map((digito, index) => (
+          <span 
+            key={index} 
+            className={`slot-cpf ${contador === index + 1 ? 'slot-ativo' : ''}`}
+          >
+            {digito !== null ? digito : "."}
+          </span>
+        ))}
+      </div>
+
+      <div className="linha-divisoria"></div>
+
+      <div className="teclado-simples">
+        <div className="linha-botoes">
+          <button className="botaoCPF" onClick={() => adicionarNumero(1)}>1</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(2)}>2</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(3)}>3</button>
+        </div>
+
+        <div className="linha-botoes">
+          <button className="botaoCPF" onClick={() => adicionarNumero(4)}>4</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(5)}>5</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(6)}>6</button>
+        </div>
+
+        <div className="linha-botoes">
+          <button className="botaoCPF" onClick={() => adicionarNumero(7)}>7</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(8)}>8</button>
+          <button className="botaoCPF" onClick={() => adicionarNumero(9)}>9</button>
+        </div>
+
+        <div className="linha-botoes">
+          <button className="botaoCPF" onClick={() => adicionarNumero(0)}>0</button>
+
+          <button className="botaoCPF botao-excluir" onClick={apagarNumero}>X</button>
+        </div>
+      </div>
+
+    </div>
+    <button className="enviarEtapa4" disabled={contador < 12} onClick={() => setEtapa(4)}>Enviar</button>
+  </div>
+)}
       {etapa === 4 && (
         <div className="janelaEtapa5">
           <img src={logo} className="logo" alt="Logo" />
           <p className="textoEtapa5">Deixe seu comentário</p>
           <textarea className="caixaDeTextoEtapa5" placeholder="Digite sua mensagem aqui... (máx. 600 caracteres)" maxLength={600} onChange={(e) => setMensagem(e.target.value)}></textarea>
-          <button className="enviarEtapa5" onClick={() => setEtapa(5)}>Enviar comentário</button>
+          <button className="enviarEtapa5" onClick={finalizarPesquisa}>Enviar comentário</button>
         </div>
       )}
 

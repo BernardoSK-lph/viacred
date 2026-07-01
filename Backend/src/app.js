@@ -1,13 +1,16 @@
 const express = require("express");
+const cors = require("cors"); 
+const respostaRoutes = require("./routes/respostaRoutes"); 
 
 const app = express();
 
+app.use(cors()); 
 app.use(express.json());
 
-// rota de teste
 app.get("/", (req, res) => {
   res.json({ mensagem: "API funcionando!" });
 });
 
-module.exports = app;
+app.use("/api", respostaRoutes);
 
+module.exports = app;
